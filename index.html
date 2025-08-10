@@ -1,117 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Student Application Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎯 Motivation Spinner Wheel</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
       color: #333;
+      margin-bottom: 20px;
     }
 
-    form {
-      background-color: white;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .wheel {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 10px solid #ccc;
+      margin: 0 auto 20px;
+      background: conic-gradient(
+        #FFADAD 0deg 60deg,
+        #FFD6A5 60deg 120deg,
+        #FDFFB6 120deg 180deg,
+        #CAFFBF 180deg 240deg,
+        #9BF6FF 240deg 300deg,
+        #A0C4FF 300deg 360deg
+      );
+      transition: transform 3s ease-out;
     }
 
-    label {
-      font-weight: bold;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="date"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    input[type="radio"] {
-      margin-right: 5px;
-    }
-
-    input[type="submit"] {
-      background-color: #007BFF;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
+    button {
+      padding: 10px 20px;
       font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    input[type="submit"]:hover {
-      background-color: #0056b3;
+    button:hover {
+      background-color: #45a049;
     }
 
-    footer {
-      text-align: center;
+    .popup {
       margin-top: 20px;
-      color: #777;
+      font-size: 18px;
+      color: #333;
+      font-style: italic;
+      min-height: 40px;
     }
   </style>
 </head>
 <body>
-  <h1>🎓 Student Application Form</h1>
+  <div class="container">
+    <h1>🎯 Motivation Spinner Wheel</h1>
+    <div class="wheel" id="wheel"></div>
+    <button onclick="spinWheel()">Spin</button>
+    <div id="message" class="popup"></div>
+  </div>
 
-  <form action="#" method="post">
-    <label for="fname">Full Name:</label>
-    <input type="text" id="fname" name="fullname" required>
+  <script>
+    const wheel = document.getElementById('wheel');
+    const messageBox = document.getElementById('message');
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+    const messages = [
+      "You are capable of amazing things!",
+      "Believe in yourself and all that you are.",
+      "Push yourself, because no one else is going to do it for you.",
+      "Dream it. Wish it. Do it.",
+      "Don't watch the clock; do what it does. Keep going.",
+      "Success doesn’t come from what you do occasionally, it comes from what you do consistently."
+    ];
 
-    <label>Gender:</label><br>
-    <input type="radio" id="male" name="gender" value="Male">
-    <label for="male">Male</label>
-    <input type="radio" id="female" name="gender" value="Female">
-    <label for="female">Female</label>
-    <input type="radio" id="other" name="gender" value="Other">
-    <label for="other">Other</label><br><br>
+    let spinning = false;
 
-    <label for="email">Email Address:</label>
-    <input type="email" id="email" name="email" required>
+    function spinWheel() {
+      if (spinning) return;
 
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
+      spinning = true;
+      messageBox.textContent = "";
 
-    <label for="course">Select Course:</label>
-    <select id="course" name="course" required>
-      <option value="">--Select--</option>
-      <option value="bca">BCA</option>
-      <option value="bsc">B.Sc</option>
-      <option value="bcom">B.Com</option>
-      <option value="ba">BA</option>
-    </select>
+      const randomDegree = 3600 + Math.floor(Math.random() * 360); // 10+ spins
+      const section = Math.floor(((randomDegree % 360) / 60));
 
-    <label for="percentage">Intermediate Percentage:</label>
-    <input type="text" id="percentage" name="percentage" required>
+      wheel.style.transform = `rotate(${randomDegree}deg)`;
 
-    <label for="address">Full Address:</label>
-    <textarea id="address" name="address" rows="3" required></textarea>
-
-    <input type="submit" value="Submit Application">
-  </form>
-
-  <footer>
-    <p>© 2025 Aditya Degree College | Student Admission Portal</p>
-  </footer>
+      setTimeout(() => {
+        messageBox.textContent = messages[section];
+        spinning = false;
+      }, 3000); // match CSS animation duration
+    }
+  </script>
 </body>
 </html>
-
